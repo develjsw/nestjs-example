@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { ProviderExampleController } from './provider-example.controller';
+import { ProviderController } from './provider.controller';
 import { ProviderDefaultService } from './provider-default.service';
 import { ProviderConstructorParamsService1 } from './provider-constructor-params.service1';
 import { ProviderConstructorParamsService2 } from './provider-constructor-params.service2';
 
 @Module({
-    controllers: [ProviderExampleController],
+    controllers: [ProviderController],
     providers: [
         ProviderDefaultService,
         /*
@@ -33,4 +33,4 @@ import { ProviderConstructorParamsService2 } from './provider-constructor-params
     imports: [],
     exports: []
 })
-export class ProviderExampleModule {}
+export class ProviderModule {}

@@ -3,7 +3,7 @@ import { ProviderConstructorParamsService1 } from './provider-constructor-params
 import { ProviderConstructorParamsService2 } from './provider-constructor-params.service2';
 
 @Controller('provider-example')
-export class ProviderExampleController {
+export class ProviderController {
     constructor(
         private readonly providerConstructorParamsService1: ProviderConstructorParamsService1,
         private readonly providerConstructorParamsService2: ProviderConstructorParamsService2
