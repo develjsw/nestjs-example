@@ -3,9 +3,25 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProviderModule } from './provider-example/provider.module';
 import { GetterSetterModule } from './getter-setter-example/getter-setter.module';
+import { MappingTableModule } from './mapping-dto-example/mapping-table.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-    imports: [ProviderModule, GetterSetterModule],
+    imports: [
+        ProviderModule,
+        GetterSetterModule,
+        MappingTableModule,
+        TypeOrmModule.forRoot({
+            type: 'mysql',
+            host: '127.0.0.1',
+            port: 3306,
+            username: 'root',
+            password: 'develjsw1993!@',
+            database: 'msa',
+            entities: [__dirname + '/**/mysql/*.entity{.ts, .js}'],
+            synchronize: false
+        })
+    ],
     controllers: [AppController],
     providers: [AppService]
 })
