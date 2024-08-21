@@ -5,12 +5,14 @@ import { ProviderModule } from './provider-example/provider.module';
 import { GetterSetterModule } from './getter-setter-example/getter-setter.module';
 import { MappingTableModule } from './mapping-dto-example/mapping-table.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ReturnTypeModularityModule } from './return-type-modularity-example/return-type-modularity.module';
 
 @Module({
     imports: [
         ProviderModule,
         GetterSetterModule,
         MappingTableModule,
+        ReturnTypeModularityModule,
         TypeOrmModule.forRoot({
             type: 'mysql',
             host: '127.0.0.1',
