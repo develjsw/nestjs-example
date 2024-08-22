@@ -19,7 +19,7 @@ import { ReturnTypeModularityModule } from './return-type-modularity-example/ret
             port: 3306,
             username: 'root',
             password: 'develjsw1993!@',
-            database: 'msa',
+            database: 'test',
             entities: [__dirname + '/**/mysql/*.entity{.ts, .js}'],
             synchronize: false
         })
