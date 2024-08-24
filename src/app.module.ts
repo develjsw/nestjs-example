@@ -20,7 +20,7 @@ import { ReturnTypeModularityModule } from './return-type-modularity-example/ret
             username: 'root',
             password: 'develjsw1993!@',
             database: 'test',
-            entities: [__dirname + '/**/mysql/*.entity{.ts, .js}'],
+            entities: [__dirname + '/**/mysql/*.entity{.ts,.js}'],
             synchronize: false
         })
     ],

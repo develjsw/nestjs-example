@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { CommonCodeSub } from '../../entites/mysql/common-code-sub.entity';
+import { CommonCodeSub } from '../../entities/mysql/common-code-sub.entity';
 
 @Injectable()
 export class CommonCodeSubRepository {

@@ -1,6 +1,6 @@
-import { Member } from '../mapping-dto-example/entites/mysql/member.entity';
-import { CommonCodeMain } from '../mapping-dto-example/entites/mysql/common-code-main.entity';
-import { CommonCodeSub } from '../mapping-dto-example/entites/mysql/common-code-sub.entity';
+import { Member } from '../mapping-dto-example/entities/mysql/member.entity';
+import { CommonCodeMain } from '../mapping-dto-example/entities/mysql/common-code-main.entity';
+import { CommonCodeSub } from '../mapping-dto-example/entities/mysql/common-code-sub.entity';
 
 export const entityMap = {
     tb_member: Member,
