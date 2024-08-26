@@ -6,6 +6,7 @@ import { GetterSetterModule } from './getter-setter-example/getter-setter.module
 import { MappingTableModule } from './mapping-dto-example/mapping-table.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ReturnTypeModularityModule } from './return-type-modularity-example/return-type-modularity.module';
+import { PrismaExampleModule } from './prisma-example/prisma-example.module';
 
 @Module({
     imports: [
@@ -22,7 +23,8 @@ import { ReturnTypeModularityModule } from './return-type-modularity-example/ret
             database: 'test',
             entities: [__dirname + '/**/mysql/*.entity{.ts,.js}'],
             synchronize: false
-        })
+        }),
+        PrismaExampleModule
     ],
     controllers: [AppController],
     providers: [AppService]
