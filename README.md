@@ -6,3 +6,4 @@
   - mapping-dto
   - provider
   - return-type-modularity
+  - prisma
