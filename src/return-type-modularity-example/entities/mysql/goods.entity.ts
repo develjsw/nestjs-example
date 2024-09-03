@@ -5,6 +5,9 @@ export class GoodsEntity {
     @PrimaryGeneratedColumn({ type: 'int', comment: '상품 코드(PK)' })
     goodsCd: number;
 
+    @Column({ type: 'varchar', comment: '상품명' })
+    goodsName: string;
+
     @Column({ type: 'int', comment: '상품 가격' })
     price: number;
 
@@ -15,11 +18,8 @@ export class GoodsEntity {
     regDate: Date;
 
     @UpdateDateColumn({ type: 'datetime', comment: '상품 수정일' })
-    updateDate: Date;
-
-    @Column({ type: 'varchar', comment: '상품명' })
-    goodsName: string;
+    modDate: Date;
 
     @Column({ type: 'datetime', comment: '상품 삭제일' })
-    deleteDate: Date;
+    delDate: Date;
 }
