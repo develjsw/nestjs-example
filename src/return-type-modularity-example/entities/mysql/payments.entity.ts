@@ -2,7 +2,7 @@ import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn } from 
 
 @Entity('tb_payments')
 @Index('memberCd', ['memberCd', 'goodsCd', 'paymentsCd'], { unique: true })
-export class PaymentEntity {
+export class PaymentsEntity {
     @PrimaryGeneratedColumn({ type: 'int', comment: '결제 코드' })
     paymentsCd: number;
 
