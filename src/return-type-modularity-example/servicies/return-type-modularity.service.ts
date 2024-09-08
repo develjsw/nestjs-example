@@ -53,4 +53,12 @@ export class ReturnTypeModularityService {
     async getMemberMergeGoods(): Promise<MemberGoods> {
         return await this.returnTypeModularityRepository.getMemberMergeGoods();
     }
+
+    async createMember(): Promise<Partial<MemberEntity>> {
+        const result = await this.returnTypeModularityRepository.createMember();
+
+        const { password, ...extract } = result;
+
+        return extract;
+    }
 }

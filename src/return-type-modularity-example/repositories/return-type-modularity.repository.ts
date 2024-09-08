@@ -75,11 +75,27 @@ export class ReturnTypeModularityRepository {
 
     async getMemberMergeGoods(): Promise<MemberGoods> {
         return {
-            memberCd: 1,          // member entity
-            nickName: '홍길동',    // member entity
-            goodsName: '타이틀',   // goods entity
-            regDate: new Date(),  // member entity (goods entity에도 있지만 제외시킴)
-            delDate: new Date()   // member entity (goods entity에도 있지만 제외시킴)
+            memberCd: 1, // member entity
+            nickName: '홍길동', // member entity
+            goodsName: '타이틀', // goods entity
+            regDate: new Date(), // member entity (goods entity에도 있지만 제외시킴)
+            delDate: new Date() // member entity (goods entity에도 있지만 제외시킴)
+        };
+    }
+
+    async createMember(): Promise<MemberEntity> {
+        return {
+            memberCd: 1,
+            memberNm: '홍길동',
+            nickName: '동해번쩍',
+            password: 'ds23!@#!W1312',
+            tel: '010-0000-0000',
+            email: 'test@gmail.com',
+            status: 'A',
+            regDate: new Date(),
+            modDate: new Date(),
+            delDate: new Date(),
+            dropDate: new Date()
         };
     }
 }

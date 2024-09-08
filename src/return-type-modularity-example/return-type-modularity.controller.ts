@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ReturnTypeModularityService } from './servicies/return-type-modularity.service';
 import { MemberEntity } from './entities/mysql/member.entity';
 import { GoodsEntity } from './entities/mysql/goods.entity';
@@ -9,6 +9,7 @@ import {
     MemberAndGoodsListAndPaymentsList,
     MemberGoods
 } from './return-type/detail-return.type';
+import { CreateMemberDto } from './dto/create-member.dto';
 
 @Controller('return-type-modularity')
 export class ReturnTypeModularityController {
@@ -49,5 +50,10 @@ export class ReturnTypeModularityController {
     @Get('/members/:mid/merge/goods/:gid')
     async getMemberMergeGoods(): Promise<MemberGoods> {
         return this.returnTypeModularityService.getMemberMergeGoods();
+    }
+
+    @Post('/members')
+    async createMember(@Body() createMemberDto: CreateMemberDto): Promise<Partial<MemberEntity>> {
+        return this.returnTypeModularityService.createMember();
     }
 }
