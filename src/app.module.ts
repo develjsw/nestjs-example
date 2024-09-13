@@ -7,9 +7,31 @@ import { MappingTableModule } from './mapping-dto-example/mapping-table.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ReturnTypeModularityModule } from './return-type-modularity-example/return-type-modularity.module';
 import { PrismaExampleModule } from './prisma-example/prisma-example.module';
+import productionConfig from './config/production.config';
+import developmentConfig from './config/development.config';
+import localConfig from './config/local.config';
+import { ConfigModule } from '@nestjs/config';
+
+let config;
+switch (process.env.NODE_ENV) {
+    case 'production':
+        config = productionConfig;
+        break;
+    case 'development':
+        config = developmentConfig;
+        break;
+    default:
+        config = localConfig;
+        break;
+}
 
 @Module({
     imports: [
+        ConfigModule.forRoot({
+            isGlobal: true,
+            cache: true,
+            load: [config]
+        }),
         ProviderModule,
         GetterSetterModule,
         MappingTableModule,
