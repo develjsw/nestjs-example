@@ -48,4 +48,23 @@ export class UserService {
             where
         });
     }
+
+    async createUserWithPost(userData: Prisma.UserCreateInput, postData: Prisma.PostCreateInput): Promise<any> {
+        return this.prisma.runInTransaction(async (prisma) => {
+            const user = await prisma.user.create({
+                data: userData
+            });
+
+            const post = await prisma.post.create({
+                data: {
+                    ...postData,
+                    author: {
+                        connect: { id: user.id }
+                    }
+                }
+            });
+
+            return { user, post };
+        });
+    }
 }

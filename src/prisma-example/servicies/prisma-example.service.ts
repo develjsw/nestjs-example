@@ -17,4 +17,8 @@ export class PrismaExampleService extends PrismaClient implements OnModuleInit {
     async onModuleInit() {
         await this.$connect();
     }
+
+    async runInTransaction(callback: (prisma: PrismaClient) => Promise<any>) {
+        return await this.$transaction(callback);
+    }
 }

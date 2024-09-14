@@ -67,4 +67,12 @@ export class PrismaExampleController {
     async deletePost(@Param('id') id: string): Promise<PostModel> {
         return this.postService.deletePost({ id: Number(id) });
     }
+
+    @Post('user-with-post')
+    async createUserWithPost(
+        @Body() data: { name: string; email: string; title: string; content?: string }
+    ): Promise<any> {
+        const { name, email, title, content } = data;
+        return this.userService.createUserWithPost({ name, email }, { title, content, published: true });
+    }
 }
