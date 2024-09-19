@@ -1,0 +1,268 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL2")
+}
+
+model orderItems {
+  id               BigInt          @id @default(autoincrement()) @db.UnsignedBigInt
+  nOrderId         BigInt          @db.UnsignedBigInt
+  nProductId       Int             @db.UnsignedInt
+  nQuantity        Int             @db.UnsignedInt
+  nPrice           Int             @db.UnsignedInt
+  sProductItemData String          @db.Text
+  dtCreate         DateTime?       @default(now()) @db.DateTime(0)
+  dtUpdate         DateTime?       @default(now()) @db.DateTime(0)
+  orders           orders          @relation(fields: [nOrderId], references: [id], onUpdate: Restrict, map: "orderItems_ibfk_1")
+  products         products        @relation(fields: [nPrice], references: [id], onUpdate: Restrict, map: "orderItems_ibfk_2")
+  subscriptions    subscriptions[]
+
+  @@index([nOrderId], map: "nOrderId")
+  @@index([nPrice], map: "nPrice")
+}
+
+model orders {
+  id                    BigInt          @id @default(autoincrement()) @db.UnsignedBigInt
+  nIntegratedMemberCode BigInt          @db.UnsignedBigInt
+  nMemberCode           BigInt          @db.UnsignedBigInt
+  nAgencyCode           BigInt          @db.UnsignedBigInt
+  nAmount               Int             @db.UnsignedInt
+  sOrderStatus          String          @default("PENDING") @db.VarChar(20)
+  dtCreate              DateTime?       @default(now()) @db.DateTime(0)
+  dtUpdate              DateTime?       @default(now()) @db.DateTime(0)
+  orderItems            orderItems[]
+  payments              payments[]
+  refunds               refunds[]
+  subscriptions         subscriptions[]
+}
+
+model paymentDetails {
+  id                   BigInt               @id @default(autoincrement()) @db.UnsignedBigInt
+  nPaymentId           BigInt               @db.UnsignedBigInt
+  nAmount              Int                  @db.UnsignedInt
+  sMethod              String               @default("CARD") @db.VarChar(20)
+  sMethodName          String               @db.VarChar(30)
+  sPaymentDetailStatus String               @default("PENDING") @db.VarChar(20)
+  sApprovalCode        String?              @db.VarChar(30)
+  dtPaid               DateTime?            @db.DateTime(0)
+  dtCreate             DateTime?            @default(now()) @db.DateTime(0)
+  payments             payments             @relation(fields: [nPaymentId], references: [id], onUpdate: Restrict, map: "paymentDetails_ibfk_1")
+  paymentRequestLogs   paymentRequestLogs[]
+  refundDetails        refundDetails[]
+
+  @@index([nPaymentId], map: "nPaymentId")
+}
+
+model paymentRequestLogs {
+  id               BigInt         @id @default(autoincrement()) @db.UnsignedBigInt
+  nPaymentId       BigInt         @db.UnsignedBigInt
+  nPaymentDetailId BigInt         @db.UnsignedBigInt
+  sRequest         String         @db.Text
+  sResponse        String         @db.Text
+  dtCreate         DateTime?      @default(now()) @db.DateTime(0)
+  payments         payments       @relation(fields: [nPaymentId], references: [id], onUpdate: Restrict, map: "paymentRequestLogs_ibfk_1")
+  paymentDetails   paymentDetails @relation(fields: [nPaymentDetailId], references: [id], onUpdate: Restrict, map: "paymentRequestLogs_ibfk_2")
+
+  @@index([nPaymentDetailId], map: "nPaymentDetailId")
+  @@index([nPaymentId], map: "nPaymentId")
+}
+
+model payments {
+  id                    BigInt               @id @default(autoincrement()) @db.UnsignedBigInt
+  nIntegratedMemberCode BigInt               @db.UnsignedBigInt
+  nMemberCode           BigInt               @db.UnsignedBigInt
+  nAgencyCode           BigInt               @db.UnsignedBigInt
+  nOrderId              BigInt               @db.UnsignedBigInt
+  nAmount               Int                  @db.UnsignedInt
+  sPaymentStatus        String               @default("PENDING") @db.VarChar(20)
+  dtPaid                DateTime?            @db.DateTime(0)
+  dtCreate              DateTime?            @default(now()) @db.DateTime(0)
+  dtUpdate              DateTime?            @default(now()) @db.DateTime(0)
+  paymentDetails        paymentDetails[]
+  paymentRequestLogs    paymentRequestLogs[]
+  orders                orders               @relation(fields: [nOrderId], references: [id], onUpdate: Restrict, map: "payments_ibfk_1")
+  refunds               refunds[]
+
+  @@index([nOrderId], map: "nOrderId")
+}
+
+model products {
+  id              Int             @id @default(autoincrement()) @db.UnsignedInt
+  sName           String          @db.VarChar(30)
+  sDescription    String?         @db.Text
+  sType           String          @db.VarChar(10)
+  nPrice          Int             @db.UnsignedInt
+  sIsSubscription String?         @default("N") @db.VarChar(1)
+  nPeriod         Int?
+  dtCreate        DateTime?       @default(now()) @db.DateTime(0)
+  dtUpdate        DateTime?       @default(now()) @db.DateTime(0)
+  orderItems      orderItems[]
+  subscriptions   subscriptions[]
+}
+
+model refundDetails {
+  id                  BigInt         @id @default(autoincrement()) @db.UnsignedBigInt
+  nRefundId           BigInt         @db.UnsignedBigInt
+  nPaymentDetailId    BigInt         @db.UnsignedBigInt
+  nAmount             Int            @db.UnsignedInt
+  sRefundDetailStatus String         @default("PENDING") @db.VarChar(20)
+  dtCreate            DateTime?      @default(now()) @db.DateTime(0)
+  refunds             refunds        @relation(fields: [nRefundId], references: [id], onUpdate: Restrict, map: "refundDetails_ibfk_1")
+  paymentDetails      paymentDetails @relation(fields: [nPaymentDetailId], references: [id], onUpdate: Restrict, map: "refundDetails_ibfk_2")
+
+  @@index([nPaymentDetailId], map: "nPaymentDetailId")
+  @@index([nRefundId], map: "nRefundId")
+}
+
+model refunds {
+  id                    BigInt          @id @default(autoincrement()) @db.UnsignedBigInt
+  nIntegratedMemberCode BigInt          @db.UnsignedBigInt
+  nMemberCode           BigInt          @db.UnsignedBigInt
+  nAgencyCode           BigInt          @db.UnsignedBigInt
+  nOrderId              BigInt          @db.UnsignedBigInt
+  nPaymentId            BigInt          @db.UnsignedBigInt
+  nAmount               Int             @db.UnsignedInt
+  sReason               String?         @db.Text
+  sRefundStatus         String          @default("PENDING") @db.VarChar(20)
+  dtCreate              DateTime?       @default(now()) @db.DateTime(0)
+  dtUpdate              DateTime?       @default(now()) @db.DateTime(0)
+  refundDetails         refundDetails[]
+  orders                orders          @relation(fields: [nOrderId], references: [id], onUpdate: Restrict, map: "refunds_ibfk_1")
+  payments              payments        @relation(fields: [nPaymentId], references: [id], onUpdate: Restrict, map: "refunds_ibfk_2")
+
+  @@index([nOrderId], map: "nOrderId")
+  @@index([nPaymentId], map: "nPaymentId")
+}
+
+model safeCareContractors {
+  id              BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  nSafeCareId     BigInt    @db.UnsignedBigInt
+  sKind           String    @db.VarChar(10)
+  sType           String    @db.VarChar(10)
+  sName           String    @db.VarChar(30)
+  sContact        String    @db.VarChar(15)
+  sRegistrationNo String    @db.VarChar(30)
+  dtCreate        DateTime? @default(now()) @db.DateTime(0)
+  dtUpdate        DateTime? @default(now()) @db.DateTime(0)
+  safeCares       safeCares @relation(fields: [nSafeCareId], references: [id], onUpdate: Restrict, map: "safeCareContractors_ibfk_1")
+
+  @@index([nSafeCareId], map: "nSafeCareId")
+}
+
+model safeCareFiles {
+  id          BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  nSafeCareId BigInt    @db.UnsignedBigInt
+  sType       String    @db.VarChar(10)
+  sPath       String    @db.VarChar(100)
+  sName       String    @db.VarChar(100)
+  dtCreate    DateTime? @default(now()) @db.DateTime(0)
+  safeCares   safeCares @relation(fields: [nSafeCareId], references: [id], onUpdate: Restrict, map: "safeCareFiles_ibfk_1")
+
+  @@index([nSafeCareId], map: "nSafeCareId")
+}
+
+model safeCareLogs {
+  id            BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  nSafeCareId   BigInt    @db.UnsignedBigInt
+  sOriginalData String    @db.Text
+  sChangedData  String    @db.Text
+  dtCreate      DateTime? @default(now()) @db.DateTime(0)
+  safeCares     safeCares @relation(fields: [nSafeCareId], references: [id], onUpdate: Restrict, map: "safeCareLogs_ibfk_1")
+
+  @@index([nSafeCareId], map: "nSafeCareId")
+}
+
+model safeCareRequestLogs {
+  id            BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  nSafeCareId   BigInt    @db.UnsignedBigInt
+  sStatus       String    @db.VarChar(20)
+  sRequestData  String    @db.Text
+  sResponseData String    @db.Text
+  dtCreate      DateTime? @default(now()) @db.DateTime(0)
+  safeCares     safeCares @relation(fields: [nSafeCareId], references: [id], onUpdate: Restrict, map: "safeCareRequestLogs_ibfk_1")
+
+  @@index([nSafeCareId], map: "nSafeCareId")
+}
+
+model safeCares {
+  id                    BigInt                @id @default(autoincrement()) @db.UnsignedBigInt
+  nIntegratedMemberCode BigInt                @db.UnsignedBigInt
+  nAgencyCode           BigInt                @db.UnsignedBigInt
+  nMemberCode           BigInt                @db.UnsignedBigInt
+  nContractCode         BigInt                @db.UnsignedBigInt
+  sStatus               String                @db.VarChar(20)
+  sType                 String                @db.VarChar(20)
+  sAddress              String                @db.VarChar(200)
+  sPropertyType         String                @db.VarChar(1)
+  sPropertyNo           String?               @db.VarChar(16)
+  sContractDate         String                @db.VarChar(8)
+  sBalanceDate          String                @db.VarChar(8)
+  sInsuranceAmount      Int                   @db.UnsignedInt
+  sAgencyName           String                @db.VarChar(100)
+  sAgencyOwnerName      String                @db.VarChar(50)
+  sStaffName            String                @db.VarChar(20)
+  sStaffContact         String                @db.VarChar(16)
+  sPrevRenewalId        String?               @db.VarChar(15)
+  sReorderCount         Int                   @db.UnsignedTinyInt
+  sInsuranceReqNo       String?               @db.VarChar(20)
+  sPremiumAmount        Int?                  @db.UnsignedInt
+  dtCreate              DateTime?             @default(now()) @db.DateTime(0)
+  dtUpdate              DateTime?             @default(now()) @db.DateTime(0)
+  safeCareContractors   safeCareContractors[]
+  safeCareFiles         safeCareFiles[]
+  safeCareLogs          safeCareLogs[]
+  safeCareRequestLogs   safeCareRequestLogs[]
+}
+
+model subscriptionLogs {
+  id              BigInt        @id @default(autoincrement()) @db.UnsignedBigInt
+  nSubscriptionId BigInt        @db.UnsignedBigInt
+  sOriginalData   String?       @db.Text
+  sChangedData    String?       @db.Text
+  dtCreate        DateTime?     @default(now()) @db.DateTime(0)
+  subscriptions   subscriptions @relation(fields: [nSubscriptionId], references: [id], onUpdate: Restrict, map: "subscriptionLogs_ibfk_1")
+
+  @@index([nSubscriptionId], map: "nSubscriptionId")
+}
+
+model subscriptions {
+  id                    BigInt             @id @default(autoincrement()) @db.UnsignedBigInt
+  nIntegratedMemberCode BigInt             @db.UnsignedBigInt
+  nMemberCode           BigInt             @db.UnsignedBigInt
+  nAgencyCode           BigInt             @db.UnsignedBigInt
+  nProductId            Int                @db.UnsignedInt
+  nOrderId              BigInt             @db.UnsignedBigInt
+  nOrderItemId          BigInt             @db.UnsignedBigInt
+  nParentSubscriptionId BigInt?            @db.UnsignedBigInt
+  subscriptionStatus    String             @default("PENDING") @db.VarChar(20)
+  dtStart               DateTime           @db.DateTime(0)
+  dtEnd                 DateTime           @db.DateTime(0)
+  dtCreate              DateTime?          @default(now()) @db.DateTime(0)
+  dtUpdate              DateTime?          @default(now()) @db.DateTime(0)
+  subscriptionLogs      subscriptionLogs[]
+  products              products           @relation(fields: [nProductId], references: [id], onUpdate: Restrict, map: "subscriptions_ibfk_1")
+  orders                orders             @relation(fields: [nOrderId], references: [id], onUpdate: Restrict, map: "subscriptions_ibfk_2")
+  orderItems            orderItems         @relation(fields: [nOrderItemId], references: [id], onUpdate: Restrict, map: "subscriptions_ibfk_3")
+
+  @@index([nOrderId], map: "nOrderId")
+  @@index([nOrderItemId], map: "nOrderItemId")
+  @@index([nProductId], map: "nProductId")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model we12 {
+
+  /// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
+  // 열 1 Int? @map("열 1")
+  @@ignore
+}
