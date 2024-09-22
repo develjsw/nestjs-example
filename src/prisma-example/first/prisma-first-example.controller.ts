@@ -1,7 +1,8 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { UserService } from './servicies/user.service';
 import { PostService } from './servicies/post.service';
-import { User as UserModel, Post as PostModel } from '@prisma/client';
+//import { User as UserModel, Post as PostModel } from '@prisma/client';
+import { User as UserModel, Post as PostModel } from '../../../prisma/generated/first';
 
 @Controller('prisma-first-example')
 export class PrismaFirstExampleController {

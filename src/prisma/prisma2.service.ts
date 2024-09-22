@@ -1,8 +1,8 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient as PrismaClientSecond } from '../../prisma/generated/second';
 
 @Injectable()
-export class Prisma2Service extends PrismaClient implements OnModuleInit {
+export class Prisma2Service extends PrismaClientSecond implements OnModuleInit {
     constructor() {
         super({
             datasources: {
@@ -18,7 +18,7 @@ export class Prisma2Service extends PrismaClient implements OnModuleInit {
         await this.$connect();
     }
 
-    async runInTransaction(callback: (prisma: PrismaClient) => Promise<any>) {
+    async runInTransaction(callback: (prisma: PrismaClientSecond) => Promise<any>) {
         return await this.$transaction(callback);
     }
 }
