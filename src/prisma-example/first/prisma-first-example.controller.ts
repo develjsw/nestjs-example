@@ -3,8 +3,8 @@ import { UserService } from './servicies/user.service';
 import { PostService } from './servicies/post.service';
 import { User as UserModel, Post as PostModel } from '@prisma/client';
 
-@Controller('prisma-example')
-export class PrismaExampleController {
+@Controller('prisma-first-example')
+export class PrismaFirstExampleController {
     constructor(
         private readonly userService: UserService,
         private readonly postService: PostService

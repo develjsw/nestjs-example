@@ -6,11 +6,12 @@ import { GetterSetterModule } from './getter-setter-example/getter-setter.module
 import { MappingTableModule } from './mapping-dto-example/mapping-table.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ReturnTypeModularityModule } from './return-type-modularity-example/return-type-modularity.module';
-import { PrismaExampleModule } from './prisma-example/prisma-example.module';
+import { PrismaFirstExampleModule } from './prisma-example/first/prisma-first-example.module';
 import productionConfig from './config/production.config';
 import developmentConfig from './config/development.config';
 import localConfig from './config/local.config';
 import { ConfigModule } from '@nestjs/config';
+import { PrismaSecondExampleModule } from './prisma-example/second/prisma-second-example.module';
 
 let config;
 switch (process.env.NODE_ENV) {
@@ -46,7 +47,8 @@ switch (process.env.NODE_ENV) {
             entities: [__dirname + '/**/mysql/*.entity{.ts,.js}'],
             synchronize: false
         }),
-        PrismaExampleModule
+        PrismaFirstExampleModule,
+        PrismaSecondExampleModule
     ],
     controllers: [AppController],
     providers: [AppService]
