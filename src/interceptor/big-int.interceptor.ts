@@ -20,5 +20,5 @@ export class BigIntInterceptor implements NestInterceptor {
 
 // BigInt 처리 함수
 function serializeBigInt(obj: any): string {
-    return JSON.stringify(obj, (key, value) => (typeof value === 'bigint' ? value.toString() : value));
+    return JSON.stringify(obj, (key, value) => (typeof value === 'bigint' ? Number(value) : value));
 }
