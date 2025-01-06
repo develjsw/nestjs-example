@@ -12,6 +12,7 @@ import developmentConfig from './config/development.config';
 import localConfig from './config/local.config';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaSecondExampleModule } from './prisma-example/second/prisma-second-example.module';
+import { BuilderPatternModule } from './builder-pattern-example/builder-pattern.module';
 
 let config;
 switch (process.env.NODE_ENV) {
@@ -48,7 +49,8 @@ switch (process.env.NODE_ENV) {
             synchronize: false
         }),
         PrismaFirstExampleModule,
-        PrismaSecondExampleModule
+        PrismaSecondExampleModule,
+        BuilderPatternModule
     ],
     controllers: [AppController],
     providers: [AppService]
