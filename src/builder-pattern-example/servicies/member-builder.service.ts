@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Member } from '../entities/mysql/member.entity';
-import { BuilderInterface } from '../interface/builder.interface';
+import { MemberBuilderInterface } from '../interface/member-builder.interface';
 
 // Concrete Builder 역할 : 객체 생성에 필요한 메서드를 구현
 @Injectable()
-export class MemberBuilderService implements BuilderInterface<Member> {
+export class MemberBuilderService implements MemberBuilderInterface {
     private member: Member;
 
     constructor() {
