@@ -13,6 +13,7 @@ import localConfig from './config/local.config';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaSecondExampleModule } from './prisma-example/second/prisma-second-example.module';
 import { BuilderPatternModule } from './builder-pattern-example/builder-pattern.module';
+import { HttpExampleModule } from './http-example/http-example.module';
 
 let config;
 switch (process.env.NODE_ENV) {
@@ -50,7 +51,8 @@ switch (process.env.NODE_ENV) {
         }),
         PrismaFirstExampleModule,
         PrismaSecondExampleModule,
-        BuilderPatternModule
+        BuilderPatternModule,
+        HttpExampleModule
     ],
     controllers: [AppController],
     providers: [AppService]
