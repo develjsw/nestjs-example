@@ -1,9 +1,9 @@
 import { Controller, Delete, Get, Patch, Post, Put } from '@nestjs/common';
-import { HttpExampleService } from './http-example.service';
+import { HttpClientExampleService } from './http-client-example.service';
 
-@Controller('http')
-export class HttpExampleController {
-    constructor(private readonly httpExampleService: HttpExampleService) {}
+@Controller('http-clients')
+export class HttpClientExampleController {
+    constructor(private readonly httpExampleService: HttpClientExampleService) {}
 
     @Get()
     async httpGetMethod() {
