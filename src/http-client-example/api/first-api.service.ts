@@ -5,6 +5,8 @@ import { THeader, TMethod, TResponseType } from './type/api-type';
 import { lastValueFrom } from 'rxjs';
 import { AxiosResponse } from 'axios';
 
+const DEFAULT_TIMEOUT_MS: number = 5000;
+
 type TApiOption = {
     url: string;
     method: TMethod;
@@ -23,15 +25,15 @@ export class FirstApiService implements ApiInterface {
     }
 
     setUrl(baseUrl: string, path?: string, pathParams?: Record<string, any>): this {
+        let fullPath: string = path || '';
+
         if (path && pathParams) {
-            const convertPath: string = Object.entries(pathParams).reduce((resultPath, [key, value]) => {
+            fullPath = Object.entries(pathParams).reduce((resultPath, [key, value]) => {
                 return resultPath.replace(`{${key}}`, value.toString());
             }, path);
-
-            this.apiOption.url = baseUrl + convertPath;
-        } else {
-            this.apiOption.url = baseUrl;
         }
+
+        this.apiOption.url = `${baseUrl}${fullPath}`;
 
         return this;
     }
@@ -46,9 +48,13 @@ export class FirstApiService implements ApiInterface {
         return this;
     }
 
-    // TODO : get method vs etc method 값 저장방식 분기처리 필요
     setData(data: any): this {
-        this.apiOption.data = data;
+        if (this.apiOption.method !== 'get') {
+            this.apiOption.data = data;
+        } else {
+            this.apiOption.url = this.apiOption.url + '?' + new URLSearchParams(data).toString();
+        }
+
         return this;
     }
 
@@ -69,11 +75,11 @@ export class FirstApiService implements ApiInterface {
             headers: {
                 //Authorization: 'Bearer ' + '토큰값',
                 'Content-Type': 'application/json',
-                Accept: 'application/json',
+                Accept: 'application/json'
                 //Version: '1.0.0'
             },
             responseType: 'json',
-            timeout: 5000
+            timeout: DEFAULT_TIMEOUT_MS
         };
     }
 
