@@ -14,6 +14,7 @@ import { ConfigModule } from '@nestjs/config';
 import { PrismaSecondExampleModule } from './prisma-example/second/prisma-second-example.module';
 import { BuilderPatternModule } from './builder-pattern-example/builder-pattern.module';
 import { HttpClientExampleModule } from './http-client-example/http-client-example.module';
+import { StrategyPatternModule } from './strategy-pattern-example/strategy-pattern.module';
 
 let config;
 switch (process.env.NODE_ENV) {
@@ -52,7 +53,8 @@ switch (process.env.NODE_ENV) {
         PrismaFirstExampleModule,
         PrismaSecondExampleModule,
         BuilderPatternModule,
-        HttpClientExampleModule
+        HttpClientExampleModule,
+        StrategyPatternModule
     ],
     controllers: [AppController],
     providers: [AppService]
