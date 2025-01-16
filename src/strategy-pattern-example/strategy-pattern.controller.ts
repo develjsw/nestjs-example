@@ -4,6 +4,13 @@ import { CacheService } from './payment-method/cache.service';
 import { GiftCardService } from './payment-method/gift-card.service';
 import { PgService } from './payment-method/pg.service';
 
+enum EPayMethod {
+    BANK_TRANSFER = 'bankTransfer',
+    CACHE = 'cache',
+    GIFT_CARD = 'giftCard',
+    PG = 'pg'
+}
+
 @Controller('strategy-pattern')
 export class StrategyPatternController {
     constructor(
@@ -15,7 +22,7 @@ export class StrategyPatternController {
 
     @Get('payments')
     async getTotalPayment(
-        @Query('method') method: string,
+        @Query('method') method: EPayMethod,
         @Query('amount', ParseIntPipe) amount: number
     ): Promise<string> {
         if (!method || !amount) {
@@ -23,13 +30,13 @@ export class StrategyPatternController {
         }
 
         switch (method) {
-            case 'bankTransfer':
+            case EPayMethod.BANK_TRANSFER:
                 return this.bankTransferService.pay(amount);
-            case 'cache':
+            case EPayMethod.CACHE:
                 return this.cacheService.pay(amount);
-            case 'giftCard':
+            case EPayMethod.GIFT_CARD:
                 return this.giftCardService.pay(amount);
-            case 'pg':
+            case EPayMethod.PG:
                 return this.pgService.pay(amount);
             default:
                 throw new BadRequestException('선택한 결제수단이 유효하지 않습니다.');
