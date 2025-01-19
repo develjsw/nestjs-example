@@ -15,6 +15,7 @@ import { PrismaSecondExampleModule } from './prisma-example/second/prisma-second
 import { BuilderPatternModule } from './builder-pattern-example/builder-pattern.module';
 import { HttpClientExampleModule } from './http-client-example/http-client-example.module';
 import { StrategyPatternModule } from './strategy-pattern-example/strategy-pattern.module';
+import { FacadePatternModule } from './facade-pattern-example/facade-pattern.module';
 
 let config;
 switch (process.env.NODE_ENV) {
@@ -54,7 +55,8 @@ switch (process.env.NODE_ENV) {
         PrismaSecondExampleModule,
         BuilderPatternModule,
         HttpClientExampleModule,
-        StrategyPatternModule
+        StrategyPatternModule,
+        FacadePatternModule
     ],
     controllers: [AppController],
     providers: [AppService]
