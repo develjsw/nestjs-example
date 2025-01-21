@@ -15,7 +15,7 @@ import { PrismaSecondExampleModule } from './prisma-example/second/prisma-second
 import { BuilderPatternModule } from './builder-pattern-example/builder-pattern.module';
 import { HttpClientExampleModule } from './http-client-example/http-client-example.module';
 import { StrategyPatternModule } from './strategy-pattern-example/strategy-pattern.module';
-import { FacadePatternModule } from './facade-pattern-example/facade-pattern.module';
+import { FacadePatternExampleModule } from './facade-pattern-example/facade-pattern-example.module';
 
 let config;
 switch (process.env.NODE_ENV) {
@@ -51,12 +51,23 @@ switch (process.env.NODE_ENV) {
             entities: [__dirname + '/**/mysql/*.entity{.ts,.js}'],
             synchronize: false
         }),
+        TypeOrmModule.forRoot({
+            name: 'facade-orm',
+            type: 'mysql',
+            host: '127.0.0.1',
+            port: 3306,
+            username: 'root',
+            password: 'develjsw1993!@',
+            database: 'facade-pattern',
+            entities: [__dirname + '/**/mysql-facade/*.entity{.ts,.js}'],
+            synchronize: false
+        }),
         PrismaFirstExampleModule,
         PrismaSecondExampleModule,
         BuilderPatternModule,
         HttpClientExampleModule,
         StrategyPatternModule,
-        FacadePatternModule
+        FacadePatternExampleModule
     ],
     controllers: [AppController],
     providers: [AppService]
