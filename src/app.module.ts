@@ -16,6 +16,7 @@ import { BuilderPatternModule } from './builder-pattern-example/builder-pattern.
 import { HttpClientExampleModule } from './http-client-example/http-client-example.module';
 import { StrategyPatternModule } from './strategy-pattern-example/strategy-pattern.module';
 import { FacadePatternExampleModule } from './facade-pattern-example/facade-pattern-example.module';
+import { ObserverPatternModule } from './observer-pattern-example/observer-pattern.module';
 
 let config;
 switch (process.env.NODE_ENV) {
@@ -67,7 +68,8 @@ switch (process.env.NODE_ENV) {
         BuilderPatternModule,
         HttpClientExampleModule,
         StrategyPatternModule,
-        FacadePatternExampleModule
+        FacadePatternExampleModule,
+        ObserverPatternModule,
     ],
     controllers: [AppController],
     providers: [AppService]
