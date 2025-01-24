@@ -17,6 +17,7 @@ import { HttpClientExampleModule } from './http-client-example/http-client-examp
 import { StrategyPatternModule } from './strategy-pattern-example/strategy-pattern.module';
 import { FacadePatternExampleModule } from './facade-pattern-example/facade-pattern-example.module';
 import { ObserverPatternModule } from './observer-pattern-example/observer-pattern.module';
+import { ExceptionModule } from './exception/exception.module';
 
 let config;
 switch (process.env.NODE_ENV) {
@@ -70,6 +71,7 @@ switch (process.env.NODE_ENV) {
         StrategyPatternModule,
         FacadePatternExampleModule,
         ObserverPatternModule,
+        ExceptionModule
     ],
     controllers: [AppController],
     providers: [AppService]
