@@ -14,6 +14,12 @@ async function bootstrap() {
 
     const configService = app.get(ConfigService);
 
+    // HTTP 서버 설정
+    const server = app.getHttpServer();
+    server.keepAliveTimeout = 1000 * 60;
+    server.headersTimeout = 1000 * 61; // keepAliveTimeout 보다 큰 값이여야 함
+
+    // 애플리케이션 시작
     await app.listen(configService.get<string>('config-info.port'));
 }
 bootstrap();
