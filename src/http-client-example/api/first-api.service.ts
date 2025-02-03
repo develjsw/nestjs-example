@@ -7,6 +7,9 @@ import { AxiosResponse } from 'axios';
 
 const DEFAULT_TIMEOUT_MS: number = 5000;
 
+const RETRY_BASE_DELAY_MS: number = 1000;
+const RETRY_MAX_DELAY_MS: number = 4000;
+
 type TApiOption = {
     url: string;
     method: TMethod;
@@ -100,6 +103,31 @@ export class FirstApiService implements ApiInterface {
             });
     }
 
-    // TODO : executeWithRetry 작업 필요
-    async executeWithRetry(executeCount: number): Promise<void> {}
+    private async delay(ms: number): Promise<void> {
+        return new Promise<void>((resolve) => setTimeout(resolve, ms));
+    }
+
+    async executeWithRetry(executeCount: number): Promise<Pick<AxiosResponse, 'status' | 'statusText' | 'data'>> {
+        for (let count = 0; count < executeCount; count++) {
+            try {
+                const response: AxiosResponse = await lastValueFrom(this.httpService.request(this.apiOption));
+
+                const { status, statusText, data } = response;
+
+                return {
+                    status,
+                    statusText,
+                    data
+                };
+            } catch (error: any) {
+                // 마지막 시도에서까지 에러 발생한 경우만 에러 발생시키고 종료
+                if (count === executeCount - 1) {
+                    throw error;
+                }
+
+                const delayTime: number = Math.min(RETRY_BASE_DELAY_MS * Math.pow(2, count), RETRY_MAX_DELAY_MS);
+                await this.delay(delayTime);
+            }
+        }
+    }
 }
