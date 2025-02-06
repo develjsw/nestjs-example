@@ -18,6 +18,7 @@ import { StrategyPatternModule } from './strategy-pattern-example/strategy-patte
 import { FacadePatternExampleModule } from './facade-pattern-example/facade-pattern-example.module';
 import { ObserverPatternModule } from './observer-pattern-example/observer-pattern.module';
 import { ExceptionModule } from './exception/exception.module';
+import { RedisModule } from './redis-data-structure-example/redis.module';
 
 let config;
 switch (process.env.NODE_ENV) {
@@ -71,7 +72,8 @@ switch (process.env.NODE_ENV) {
         StrategyPatternModule,
         FacadePatternExampleModule,
         ObserverPatternModule,
-        ExceptionModule
+        ExceptionModule,
+        RedisModule
     ],
     controllers: [AppController],
     providers: [AppService]
