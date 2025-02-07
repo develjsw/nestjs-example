@@ -1,5 +1,9 @@
 export interface RedisListDataStructureInterface {
-    pushToList(key: string, value: string): Promise<void>;
+    pushToLeftList(key: string, value: string, ttl?: number): Promise<void>;
+    pushToRightList(key: string, value: string, ttl?: number): Promise<void>;
+    pushMultipleToLeftList(key: string, values: string[], ttl?: number): Promise<void>;
+    pushMultipleToRightList(key: string, values: string[], ttl?: number): Promise<void>;
     getListRange(key: string, start: number, end: number): Promise<string[]>;
-    popFromList(key: string): Promise<string | null>;
+    popFromRightList(key: string): Promise<string | null>;
+    popFromLeftList(key: string): Promise<string | null>;
 }

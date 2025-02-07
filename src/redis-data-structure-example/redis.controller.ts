@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe } from "@nestjs/common";
 import { RedisService } from './service/redis.service';
 
 @Controller('redis-data-structure-example')
@@ -7,8 +7,9 @@ export class RedisController {
 
     /* 📌 Hash 관련 */
     @Post('hash/:key')
-    async setHashData(@Param('key') key: string, @Body() data: Record<string, any>) {
-        await this.redisService.setHashData(key, data);
+    async setHashData(@Param('key') key: string, @Body() data: { ttl?: number } & Record<string, any>) {
+        const { ttl, ...dto } = data;
+        await this.redisService.setHashData(key, dto, ttl);
     }
 
     @Get('hash/:key')
@@ -22,25 +23,55 @@ export class RedisController {
     }
 
     /* 📌 List 관련 */
-    @Post('list/:key')
-    async pushToList(@Param('key') key: string, @Body() value: { data: string }) {
-        await this.redisService.pushToList(key, value.data);
+    @Post('list/LIFO/:key')
+    async pushToLeftList(@Param('key') key: string, @Body() value: { data: string; ttl?: number }) {
+        const { ttl, data } = value;
+
+        await this.redisService.pushToLeftList(key, data, ttl);
+    }
+
+    @Post('list/FIFO/:key')
+    async pushToRightList(@Param('key') key: string, @Body() value: { data: string; ttl?: number }) {
+        const { ttl, data } = value;
+
+        await this.redisService.pushToRightList(key, data, ttl);
+    }
+
+    @Post('list/multi/LIFO/:key')
+    async pushMultipleToLeftList(@Param('key') key: string, @Body() value: { data: string[]; ttl?: number }) {
+        // TODO : 유효성 검사 필요
+        const { ttl, data } = value;
+
+        await this.redisService.pushMultipleToLeftList(key, data, ttl);
+    }
+
+    @Post('list/multi/FIFO/:key')
+    async pushMultipleToRightList(@Param('key') key: string, @Body() value: { data: string[]; ttl?: number }) {
+        // TODO : 유효성 검사 필요
+        const { ttl, data } = value;
+
+        await this.redisService.pushMultipleToRightList(key, data, ttl);
     }
 
     @Get('list/:key/:start/:end')
-    async getListRange(@Param('key') key: string, @Param('start') start: number, @Param('end') end: number) {
+    async getListRange(
+        @Param('key') key: string,
+        @Param('start', ParseIntPipe) start: number,
+        @Param('end', ParseIntPipe) end: number
+    ) {
         return this.redisService.getListRange(key, start, end);
     }
 
-    @Post('list/:key/pop')
+    @Delete('list/:key/pop')
     async popFromList(@Param('key') key: string) {
-        return this.redisService.popFromList(key);
+        return this.redisService.popFromRightList(key);
     }
 
     /* 📌 Set 관련 */
     @Post('set/:key')
-    async addToSet(@Param('key') key: string, @Body() value: { data: string }) {
-        await this.redisService.addToSet(key, value.data);
+    async addToSet(@Param('key') key: string, @Body() value: { data: string; ttl?: number }) {
+        const { ttl, data } = value;
+        await this.redisService.addToSet(key, data, ttl);
     }
 
     @Get('set/:key')
