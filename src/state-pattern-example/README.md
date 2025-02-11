@@ -14,7 +14,7 @@
     - 현재 상태를 관리하고, 해당 상태에 따라 적절한 동작을 수행하는 주체
     - EX) Order, Payment 등의 클래스가 상태를 포함
     - setState(newState) 메서드를 통해 상태 전환 가능
-  - 동적 상태 전환 (Dynamic State Transition)
+  - 동적 상태 전환 (Dynamic State Transition) :
     - 컨텍스트 객체가 setState(newState)를 호출하면 현재 상태를 변경하고 새로운 상태의 로직을 실행
     - 이를 통해 상태 변경을 유연하게 관리 가능
     

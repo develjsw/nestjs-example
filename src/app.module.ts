@@ -19,6 +19,7 @@ import { FacadePatternExampleModule } from './facade-pattern-example/facade-patt
 import { ObserverPatternModule } from './observer-pattern-example/observer-pattern.module';
 import { ExceptionModule } from './exception/exception.module';
 import { RedisModule } from './redis-data-structure-example/redis.module';
+import { StatePatternExampleModule } from './state-pattern-example/state-pattern-example.module';
 
 let config;
 switch (process.env.NODE_ENV) {
@@ -51,7 +52,7 @@ switch (process.env.NODE_ENV) {
             username: 'root',
             password: 'develjsw1993!@',
             database: 'test',
-            entities: [__dirname + '/**/mysql/*.entity{.ts,.js}'],
+            entities: [__dirname + '/**/mysql/*.entities{.ts,.js}'],
             synchronize: false
         }),
         TypeOrmModule.forRoot({
@@ -62,7 +63,7 @@ switch (process.env.NODE_ENV) {
             username: 'root',
             password: 'develjsw1993!@',
             database: 'facade-pattern',
-            entities: [__dirname + '/**/mysql-facade/*.entity{.ts,.js}'],
+            entities: [__dirname + '/**/mysql-facade/*.entities{.ts,.js}'],
             synchronize: false
         }),
         PrismaFirstExampleModule,
@@ -73,7 +74,8 @@ switch (process.env.NODE_ENV) {
         FacadePatternExampleModule,
         ObserverPatternModule,
         ExceptionModule,
-        RedisModule
+        RedisModule,
+        StatePatternExampleModule
     ],
     controllers: [AppController],
     providers: [AppService]
