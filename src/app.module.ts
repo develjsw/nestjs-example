@@ -52,7 +52,7 @@ switch (process.env.NODE_ENV) {
             username: 'root',
             password: 'develjsw1993!@',
             database: 'test',
-            entities: [__dirname + '/**/mysql/*.entities{.ts,.js}'],
+            entities: [__dirname + '/**/entities/mysql/*.entity{.ts,.js}'],
             synchronize: false
         }),
         TypeOrmModule.forRoot({
@@ -63,7 +63,7 @@ switch (process.env.NODE_ENV) {
             username: 'root',
             password: 'develjsw1993!@',
             database: 'facade-pattern',
-            entities: [__dirname + '/**/mysql-facade/*.entities{.ts,.js}'],
+            entities: [__dirname + '/**/entities/mysql-facade/*.entity{.ts,.js}'],
             synchronize: false
         }),
         TypeOrmModule.forRoot({
