@@ -10,18 +10,11 @@ export class PendingOrderState implements OrderStateInterface {
     async process(orderId: number): Promise<any> {
         console.log(`주문 ${orderId}을 처리 중입니다.`);
 
-        try {
-            const order: OrderEntity = await this.orderRepository.findOrderById(orderId);
-            if (!order) {
-                throw new Error('주문을 찾을 수 없습니다.');
-            }
-
-            return order;
-        } catch(error) {
-            console.log(error)
+        const order: OrderEntity = await this.orderRepository.findOrderById(orderId);
+        if (!order) {
+            throw new Error('주문을 찾을 수 없습니다.');
         }
 
-
-
+        return order;
     }
 }
