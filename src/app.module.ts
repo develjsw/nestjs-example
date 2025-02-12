@@ -66,6 +66,17 @@ switch (process.env.NODE_ENV) {
             entities: [__dirname + '/**/mysql-facade/*.entities{.ts,.js}'],
             synchronize: false
         }),
+        TypeOrmModule.forRoot({
+            name: 'state-orm',
+            type: 'mysql',
+            host: '127.0.0.1',
+            port: 3306,
+            username: 'root',
+            password: 'develjsw1993!@',
+            database: 'state-pattern',
+            entities: [__dirname + '/**/entities/mysql-state/*.entity{.ts,.js}'],
+            synchronize: false
+        }),
         PrismaFirstExampleModule,
         PrismaSecondExampleModule,
         BuilderPatternModule,

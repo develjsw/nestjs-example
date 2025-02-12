@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { DataSource, Repository } from 'typeorm';
-import { OrderEntity } from '../entities/mysql/order.entity';
+import { Repository } from 'typeorm';
+import { OrderEntity } from '../entities/mysql-state/order.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class OrderRepository {
-    private readonly orderRepository: Repository<OrderEntity>;
-
-    constructor(protected readonly dataSource: DataSource) {
-        this.orderRepository = dataSource.getRepository(OrderEntity);
-    }
+    constructor(
+        @InjectRepository(OrderEntity, 'state-orm')
+        private readonly orderRepository: Repository<OrderEntity>
+    ) {}
 
     async findOrderById(orderId: number): Promise<OrderEntity> {
         return await this.orderRepository.findOneBy({ orderId });

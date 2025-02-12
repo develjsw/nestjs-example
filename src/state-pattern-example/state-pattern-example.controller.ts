@@ -1,5 +1,5 @@
 import { Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
-import { OrderEntity } from './order/entities/mysql/order.entity';
+import { OrderEntity } from './order/entities/mysql-state/order.entity';
 import { OrderService } from './order/servicies/order.service';
 
 @Controller('state-pattern-example/orders')

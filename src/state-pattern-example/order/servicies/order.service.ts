@@ -3,7 +3,7 @@ import { OrderRepository } from '../repositories/order.repository';
 import { PendingOrderState } from '../states/pending-order.state';
 import { CompletedOrderState } from '../states/completed-order.state';
 import { OrderStateInterface } from '../states/order-state.interface';
-import { OrderEntity } from '../entities/mysql/order.entity';
+import { OrderEntity } from '../entities/mysql-state/order.entity';
 
 @Injectable()
 export class OrderService {
