@@ -20,6 +20,7 @@ import { ObserverPatternModule } from './observer-pattern-example/observer-patte
 import { ExceptionModule } from './exception/exception.module';
 import { RedisModule } from './redis-data-structure-example/redis.module';
 import { StatePatternExampleModule } from './state-pattern-example/state-pattern-example.module';
+import { ObserverPatternExample2Module } from './observer-pattern-example2/observer-pattern-example2.module';
 
 let config;
 switch (process.env.NODE_ENV) {
@@ -86,7 +87,8 @@ switch (process.env.NODE_ENV) {
         ObserverPatternModule,
         ExceptionModule,
         RedisModule,
-        StatePatternExampleModule
+        StatePatternExampleModule,
+        ObserverPatternExample2Module
     ],
     controllers: [AppController],
     providers: [AppService]
