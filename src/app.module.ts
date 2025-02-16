@@ -22,6 +22,7 @@ import { RedisModule } from './redis-data-structure-example/redis.module';
 import { StatePatternExampleModule } from './state-pattern-example/state-pattern-example.module';
 import { ObserverPatternExample2Module } from './observer-pattern-example2/observer-pattern-example2.module';
 import { ScopeExampleModule } from './scope-example/scope-example.module';
+import { InjectableDecoratorExampleModule } from './injectable-decorator-example/injectable-decorator-example.module';
 
 let config;
 switch (process.env.NODE_ENV) {
@@ -91,6 +92,7 @@ switch (process.env.NODE_ENV) {
         StatePatternExampleModule,
         ObserverPatternExample2Module,
         ScopeExampleModule,
+        InjectableDecoratorExampleModule
     ],
     controllers: [AppController],
     providers: [AppService]
