@@ -23,6 +23,7 @@ import { StatePatternExampleModule } from './state-pattern-example/state-pattern
 import { ObserverPatternExample2Module } from './observer-pattern-example2/observer-pattern-example2.module';
 import { ScopeExampleModule } from './scope-example/scope-example.module';
 import { InjectableDecoratorExampleModule } from './injectable-decorator-example/injectable-decorator-example.module';
+import { TypeormTransactionExampleModule } from './typeorm-transaction-example/typeorm-transaction-example.module';
 
 let config;
 switch (process.env.NODE_ENV) {
@@ -92,7 +93,8 @@ switch (process.env.NODE_ENV) {
         StatePatternExampleModule,
         ObserverPatternExample2Module,
         ScopeExampleModule,
-        InjectableDecoratorExampleModule
+        InjectableDecoratorExampleModule,
+        TypeormTransactionExampleModule
     ],
     controllers: [AppController],
     providers: [AppService]
