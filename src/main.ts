@@ -3,14 +3,18 @@ import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { BigIntInterceptor } from './interceptor/big-int.interceptor';
 import { GlobalExceptionFilter } from './exception/filter/global-exception.filter';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
 
+    app.useGlobalPipes(new ValidationPipe());
+
     app.useGlobalInterceptors(new BigIntInterceptor());
 
+    // custom validator 테스트를 위해 주석처리
     //app.useGlobalFilters(new GlobalExceptionFilter())
-    app.useGlobalFilters(app.get(GlobalExceptionFilter));
+    //app.useGlobalFilters(app.get(GlobalExceptionFilter));
 
     const configService = app.get(ConfigService);
 

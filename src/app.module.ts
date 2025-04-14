@@ -24,6 +24,7 @@ import { ObserverPatternExample2Module } from './observer-pattern-example2/obser
 import { ScopeExampleModule } from './scope-example/scope-example.module';
 import { InjectableDecoratorExampleModule } from './injectable-decorator-example/injectable-decorator-example.module';
 import { TypeormTransactionExampleModule } from './typeorm-transaction-example/typeorm-transaction-example.module';
+import { CustomValidatorModule } from './custom-validator-example/custom-validator.module';
 
 let config;
 switch (process.env.NODE_ENV) {
@@ -94,7 +95,8 @@ switch (process.env.NODE_ENV) {
         ObserverPatternExample2Module,
         ScopeExampleModule,
         InjectableDecoratorExampleModule,
-        TypeormTransactionExampleModule
+        TypeormTransactionExampleModule,
+        CustomValidatorModule
     ],
     controllers: [AppController],
     providers: [AppService]
